@@ -25,7 +25,7 @@ class StringGenerator:
                         total_combinations = len(self.placeholders[current_key])
                         continue
 
-                    total_combinations = total_combinations * len(self.template[current_key])
+                    total_combinations = total_combinations * len(self.placeholders[current_key])
 
         return total_combinations
 
@@ -34,8 +34,8 @@ class StringGenerator:
         last_found = -1
 
         for key in self.placeholders.keys():
-            current_match = self.template.find(key)
-            if last_found < 0 or current_match < last_found and current_match != -1:
+            current_match = self.template.rfind(key)
+            if last_found < 0 or current_match > last_found and current_match != -1:
                 next_placeholder = key
                 last_found = current_match
 
@@ -67,7 +67,7 @@ replacements = {
     "%a": list(string.ascii_lowercase),
     "%n": list(string.digits)
 }
-template = "V%A"
+template = "V%A%A%nB"
 
 string_generator = StringGenerator(template, replacements)
 string_generator.create_strings()
