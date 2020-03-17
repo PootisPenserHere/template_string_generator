@@ -5,7 +5,7 @@ class StringGenerator:
     def __init__(self, string_template: str, placeholders: dict):
         self.template = string_template
         self.placeholders = placeholders
-        self.previous_replace = []
+        self.previous_replace = {}
 
     def count_list_appearances_in_string(self) -> int:
         appearances = 0
@@ -29,26 +29,41 @@ class StringGenerator:
 
         return total_combinations
 
-    def find_next_placeholder(self) -> str:
+    def find_next_placeholder(self, haystack: str) -> [str, int]:
         next_placeholder = ''
         last_found = -1
 
         for key in self.placeholders.keys():
-            current_match = self.template.rfind(key)
+            current_match = haystack.rfind(key)
             if last_found < 0 or current_match > last_found and current_match != -1:
                 next_placeholder = key
                 last_found = current_match
 
-        return next_placeholder
+        return next_placeholder, last_found
 
     def form_string(self):
         new_string = self.template
 
-        i = 0
+        # Initially set to True as the function will always increase the iteration by one
+        increment = True
         for x in range(self.count_list_appearances_in_string()):
-            next_key = self.find_next_placeholder()
+            next_key, next_key_index = self.find_next_placeholder(new_string)
             key_options = self.placeholders[next_key]
-            new_string = new_string.replace(next_key, key_options[i], 1)
+            previous_index = self.previous_replace.get(next_key_index) \
+                if self.previous_replace.get(next_key_index) \
+                else 0
+
+            # TODO when iterating for th first time the previous_index is set to 0 as it doesnt yet exists but it's later increased by one skipping the first value and pushing it back to the end
+            new_index = previous_index + 1 if increment else previous_index
+            increment = False  # Increment done
+            if new_index >= len(key_options):
+                new_index = 0
+                increment = True  # Carry over to the next iteration
+
+            # Preserve the state for the next string
+            self.previous_replace[next_key_index] = new_index
+
+            new_string = key_options[new_index].join(new_string.rsplit(next_key, 1))
 
         return new_string
 
@@ -67,7 +82,7 @@ replacements = {
     "%a": list(string.ascii_lowercase),
     "%n": list(string.digits)
 }
-template = "V%A%A%nB"
+template = "%A%n"
 
 string_generator = StringGenerator(template, replacements)
 string_generator.create_strings()
