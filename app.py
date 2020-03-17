@@ -80,7 +80,8 @@ class StringGenerator:
 replacements = {
     "%A": list(string.ascii_uppercase),
     "%a": list(string.ascii_lowercase),
-    "%n": list(string.digits)
+    "%n": list(string.digits),
+    "%s": ['A', 'B'] + list(string.digits)
 }
 template = "%A%n"
 
