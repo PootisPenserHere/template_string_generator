@@ -22,10 +22,14 @@ class StringGenerator:
             if times_found:
                 for x in range(times_found):
                     if not total_combinations:
-                        total_combinations = len(self.placeholders[current_key])
+                        total_combinations = len(
+                            self.placeholders[current_key]
+                        )
                         continue
 
-                    total_combinations = total_combinations * len(self.placeholders[current_key])
+                    total_combinations = total_combinations * len(
+                        self.placeholders[current_key]
+                    )
 
         return total_combinations
 
@@ -35,7 +39,8 @@ class StringGenerator:
 
         for key in self.placeholders.keys():
             current_match = haystack.rfind(key)
-            if last_found < 0 or current_match > last_found and current_match != -1:
+            if last_found < 0 or current_match > last_found \
+                    and current_match != -1:
                 next_placeholder = key
                 last_found = current_match
 
@@ -44,7 +49,8 @@ class StringGenerator:
     def form_string(self):
         new_string = self.template
 
-        # Initially set to True as the function will always increase the iteration by one
+        # Initially set to True as the function will always increase the
+        # iteration by one
         increment = True
         for x in range(self.count_list_appearances_in_string()):
             next_key, next_key_index = self.find_next_placeholder(new_string)
@@ -53,7 +59,9 @@ class StringGenerator:
                 if self.previous_replace.get(next_key_index) \
                 else 0
 
-            # TODO when iterating for th first time the previous_index is set to 0 as it doesnt yet exists but it's later increased by one skipping the first value and pushing it back to the end
+            # TODO when iterating for th first time the previous_index is
+            #  set to 0 as it doesnt yet exists but it's later increased
+            #  by one skipping the first value and pushing it back to the end
             new_index = previous_index + 1 if increment else previous_index
             increment = False  # Increment done
             if new_index >= len(key_options):
@@ -63,7 +71,9 @@ class StringGenerator:
             # Preserve the state for the next string
             self.previous_replace[next_key_index] = new_index
 
-            new_string = key_options[new_index].join(new_string.rsplit(next_key, 1))
+            new_string = key_options[new_index].join(
+                new_string.rsplit(next_key, 1)
+            )
 
         return new_string
 
