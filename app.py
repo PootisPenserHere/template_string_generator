@@ -49,8 +49,7 @@ class StringGenerator:
     def form_string(self):
         new_string = self.template
 
-        # Initially set to True as the function will always increase the
-        # iteration by one
+        # Initially set to True as the function will always increase the # iteration by one
         increment = True
         for x in range(self.count_list_appearances_in_string()):
             next_key, next_key_index = self.find_next_placeholder(new_string)
