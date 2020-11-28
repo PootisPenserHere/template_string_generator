@@ -1,2 +1,2 @@
-# Password dictionary generator
+# Template string generator
 

@@ -2,10 +2,20 @@ import string
 
 
 class StringGenerator:
-    def __init__(self, string_template: str, placeholders: dict):
+    def __init__(self, string_template: str, placeholders: dict = None):
         self.template = string_template
-        self.placeholders = placeholders
+        self.placeholders = placeholders if placeholders else self.default_place_holders()
+
         self.previous_replace = {}
+
+    @staticmethod
+    def default_place_holders() -> dict:
+        return {
+            "%A": list(string.ascii_uppercase),
+            "%a": list(string.ascii_lowercase),
+            "%n": list(string.digits),
+            "%s": ['A', 'B'] + list(string.digits)
+        }
 
     def count_list_appearances_in_string(self) -> int:
         appearances = 0
@@ -77,23 +87,12 @@ class StringGenerator:
 
         return new_string
 
-    def create_strings(self):
+    def create_strings(self) -> list:
+        items = []
         i = 0
         while i < self.combinations_from_template():
-            print(
-                self.form_string()
-            )
+            items.append(self.form_string())
 
             i += 1
 
-
-replacements = {
-    "%A": list(string.ascii_uppercase),
-    "%a": list(string.ascii_lowercase),
-    "%n": list(string.digits),
-    "%s": ['A', 'B'] + list(string.digits)
-}
-template = "%A%n"
-
-string_generator = StringGenerator(template, replacements)
-string_generator.create_strings()
+        return items
