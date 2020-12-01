@@ -12,7 +12,7 @@ setuptools.setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/PootisPenserHere/template_string_generator",
-    packages=setuptools.find_packages(),
+    packages=setuptools.find_packages('template_string_generator/__init__.py'),
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: GNU Affero General Public License v3",
