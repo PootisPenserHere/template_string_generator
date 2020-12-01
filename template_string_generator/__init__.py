@@ -1,4 +1,4 @@
-from app import StringGenerator
+from .app import StringGenerator
 
 
 def get_default_replacements():
