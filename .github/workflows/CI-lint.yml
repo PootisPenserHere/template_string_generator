@@ -17,6 +17,8 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v1
-      - uses: ricardochaves/python-lint@v1.3.0
+      - uses: actions/setup-python@v2
         with:
-          use-pylint: true
+          python-version: '3.6'
+      - run: pip install pylint
+      - run: pylint **/*.py
