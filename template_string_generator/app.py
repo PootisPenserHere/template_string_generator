@@ -1,8 +1,35 @@
+"""
+Contains the logic for the package, the methods to generate the strings
+based on a template are declared here
+"""
+
 import string
 
 
 class StringGenerator:
+    """
+    Helper class to generate a all posible combinations of a string
+    based on wildcards
+
+    :param string_template: String containing wildcards to be used as
+    template for all combinations
+    :type string_template: str
+    :param placeholders: Dic containing the placeholders contained in the
+    template and their respective list of possible values defaults
+    to self.default_place_holders()
+    :type placeholders: dict
+    """
+
     def __init__(self, string_template: str, placeholders: dict = None):
+        """
+        :param string_template: String containing wildcards to be used as
+        template for all combinations
+        :type string_template: str
+        :param placeholders: Dic containing the placeholders contained in the
+        template and their respective list of possible values defaults
+        to self.default_place_holders()
+        :type placeholders: dict
+        """
         self.template = string_template
         self.placeholders = placeholders if placeholders else self.default_place_holders()
 
@@ -10,6 +37,13 @@ class StringGenerator:
 
     @staticmethod
     def default_place_holders() -> dict:
+        """
+        Returns the default wildcards for replacement
+
+        :return: A dictionary containing the default wildcards for
+        replacements and their characters list
+        :rtype: dict
+        """
         return {
             "%A": list(string.ascii_uppercase),
             "%a": list(string.ascii_lowercase),
@@ -17,7 +51,13 @@ class StringGenerator:
             "%s": ['A', 'B'] + list(string.digits)
         }
 
-    def count_list_appearances_in_string(self) -> int:
+    def _count_placeholders_in_template(self) -> int:
+        """
+        Counts the cumulative amount of times that each wildcard appears inside the template
+
+        :return: The amount of placeholders found
+        :rtype: int
+        """
         appearances = 0
 
         for key in self.placeholders.keys():
@@ -25,7 +65,13 @@ class StringGenerator:
 
         return appearances
 
-    def combinations_from_template(self) -> int:
+    def _total_combinations_from_template(self) -> int:
+        """
+        Calculates the total number of strings that will be generated based on
+        the given template and placeholder values
+        :return: Total amount of combinations for the template
+        :rtype int
+        """
         total_combinations = 0
         for current_key in self.placeholders.keys():
             times_found = self.template.count(current_key)
@@ -62,7 +108,7 @@ class StringGenerator:
         # Initially set to True as the function will always increase the
         # iteration by one
         increment = True
-        for x in range(self.count_list_appearances_in_string()):
+        for x in range(self._count_placeholders_in_template()):
             next_key, next_key_index = self.find_next_placeholder(new_string)
             key_options = self.placeholders[next_key]
             previous_index = self.previous_replace.get(next_key_index) \
@@ -90,7 +136,7 @@ class StringGenerator:
     def create_strings(self) -> list:
         items = []
         i = 0
-        while i < self.combinations_from_template():
+        while i < self._total_combinations_from_template():
             items.append(self.form_string())
 
             i += 1
