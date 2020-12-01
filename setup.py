@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="template_string_generator",
-    version="0.0.1",
+    version="0.0.2",
     author="Jose Pablo Aramburo",
     author_email="josepablo.aramburo@laziness.rocks",
     description="Generates all possible combinations of a string based on a given template",
