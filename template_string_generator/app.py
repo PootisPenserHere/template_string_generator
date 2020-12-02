@@ -21,7 +21,8 @@ class StringGenerator:
     :type placeholders: A dictionary with str keys and list as values
     """
 
-    def __init__(self, string_template: str, placeholders: Dict[str, int] = None):
+    def __init__(self, string_template: str,
+                 placeholders: Dict[str, int] = None):
         """
         :param string_template: String containing wildcards to be used as
         template for all combinations
@@ -32,7 +33,9 @@ class StringGenerator:
         :type placeholders: A dictionary with str keys and list as values
         """
         self.template = string_template
-        self.placeholders = placeholders if placeholders else self.default_place_holders()
+        self.placeholders = placeholders \
+            if placeholders \
+            else self.default_place_holders()
 
         self.previous_replace = {}
 
