@@ -60,7 +60,7 @@ class StringGenerator:
         """
         appearances = 0
 
-        for key in self.placeholders.keys():
+        for key in self.placeholders:
             appearances += self.template.count(key)
 
         return appearances
@@ -73,10 +73,10 @@ class StringGenerator:
         :rtype int
         """
         total_combinations = 0
-        for current_key in self.placeholders.keys():
+        for current_key in self.placeholders:
             times_found = self.template.count(current_key)
             if times_found:
-                for x in range(times_found):
+                for _ in range(times_found):
                     if not total_combinations:
                         total_combinations = len(
                             self.placeholders[current_key]
@@ -108,7 +108,7 @@ class StringGenerator:
         # Initially set to True as the function will always increase the
         # iteration by one
         increment = True
-        for x in range(self._count_placeholders_in_template()):
+        for _ in range(self._count_placeholders_in_template()):
             next_key, next_key_index = self.find_next_placeholder(new_string)
             key_options = self.placeholders[next_key]
             previous_index = self.previous_replace.get(next_key_index) \
