@@ -89,11 +89,22 @@ class StringGenerator:
 
         return total_combinations
 
-    def find_next_placeholder(self, haystack: str) -> [str, int]:
+    def find_next_placeholder(self, haystack: str) -> (str, int):
+        """
+        Finds the next placeholder within a template, this function will
+        be used through the full template replacement to find the next target
+
+        :param haystack: A string to find the next placeholder to replace,
+        this will be a template being worked on
+        :type haystack: str
+        :return: The string representation of the next placeholder in line
+        as well as its index
+        :rtype tuple of str and int
+        """
         next_placeholder = ''
         last_found = -1
 
-        for key in self.placeholders.keys():
+        for key in self.placeholders:
             current_match = haystack.rfind(key)
             if last_found < 0 or current_match > last_found \
                     and current_match != -1:
@@ -102,7 +113,14 @@ class StringGenerator:
 
         return next_placeholder, last_found
 
-    def form_string(self):
+    def form_string(self) -> str:
+        """
+        Does one iteration trough the template to create the next in line
+        of all the potential combinations
+
+        :return: A fully replaced template in the for of a string
+        :rtype str
+        """
         new_string = self.template
 
         # Initially set to True as the function will always increase the
@@ -134,6 +152,13 @@ class StringGenerator:
         return new_string
 
     def create_strings(self) -> list:
+        """
+        Wrapper method to create each of the possible combinations
+        of a template
+
+        :return: A list of string with each string combination
+        :rtype list of strings
+        """
         items = []
         i = 0
         while i < self._total_combinations_from_template():
