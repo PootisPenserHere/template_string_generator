@@ -4,25 +4,17 @@ based on a template are declared here
 """
 
 import string
-from typing import Dict
+from typing import Dict, Union, List
 
 
 class StringGenerator:
     """
     Helper class to generate a all possible combinations of a string
     based on wildcards
-
-    :param string_template: String containing wildcards to be used as
-    template for all combinations
-    :type string_template: str
-    :param placeholders: Dic containing the placeholders contained in the
-    template and their respective list of possible values defaults
-    to self.default_place_holders()
-    :type placeholders: A dictionary with str keys and list as values
     """
 
     def __init__(self, string_template: str,
-                 placeholders: Dict[str, int] = None):
+                 placeholders: Dict[str, Union[list, List[str]]] = None):
         """
         :param string_template: String containing wildcards to be used as
         template for all combinations
@@ -40,7 +32,7 @@ class StringGenerator:
         self.previous_replace = {}
 
     @staticmethod
-    def default_place_holders() -> dict:
+    def default_place_holders() -> Dict[str, Union[list, List[str]]]:
         """
         Returns the default wildcards for replacement
 
@@ -171,4 +163,5 @@ class StringGenerator:
 
             i += 1
 
+        items.sort()
         return items

@@ -2,12 +2,12 @@
 Wrapper for the app module to expose it as a package
 """
 
-from typing import Dict
+from typing import Dict, Union, List
 
 from .app import StringGenerator
 
 
-def get_default_replacements() -> Dict[str, int]:
+def get_default_replacements() -> Dict[str, Union[list, List[str]]]:
     """
     Wrapper of StringGenerator.default_place_holders()
 
