@@ -4,11 +4,12 @@ based on a template are declared here
 """
 
 import string
+from typing import Dict
 
 
 class StringGenerator:
     """
-    Helper class to generate a all posible combinations of a string
+    Helper class to generate a all possible combinations of a string
     based on wildcards
 
     :param string_template: String containing wildcards to be used as
@@ -17,10 +18,10 @@ class StringGenerator:
     :param placeholders: Dic containing the placeholders contained in the
     template and their respective list of possible values defaults
     to self.default_place_holders()
-    :type placeholders: dict
+    :type placeholders: A dictionary with str keys and list as values
     """
 
-    def __init__(self, string_template: str, placeholders: dict = None):
+    def __init__(self, string_template: str, placeholders: Dict[str, int] = None):
         """
         :param string_template: String containing wildcards to be used as
         template for all combinations
@@ -28,7 +29,7 @@ class StringGenerator:
         :param placeholders: Dic containing the placeholders contained in the
         template and their respective list of possible values defaults
         to self.default_place_holders()
-        :type placeholders: dict
+        :type placeholders: A dictionary with str keys and list as values
         """
         self.template = string_template
         self.placeholders = placeholders if placeholders else self.default_place_holders()
@@ -53,7 +54,8 @@ class StringGenerator:
 
     def _count_placeholders_in_template(self) -> int:
         """
-        Counts the cumulative amount of times that each wildcard appears inside the template
+        Counts the cumulative amount of times that each wildcard appears
+        inside the template
 
         :return: The amount of placeholders found
         :rtype: int
